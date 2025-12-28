@@ -61,7 +61,7 @@ A WebXR-based VR zombie defense game built with A-Frame. Eliminate zombies with 
 
 ## Team Roles
 
-### 1. **Design** 
+### 1. **Design** - Erica Del Carmen
 **Responsibilities:**
 - Visual design and UI/UX
 - 3D model integration and asset placement
@@ -71,7 +71,7 @@ A WebXR-based VR zombie defense game built with A-Frame. Eliminate zombies with 
 
 ---
 
-### 2. **Game Logic**
+### 2. **Game Logic** - Joseph Renanh Polistico
 **Responsibilities:**
 - Core game mechanics (spawning, collision detection, scoring)
 - Zombie AI and behavior (movement)
@@ -81,12 +81,12 @@ A WebXR-based VR zombie defense game built with A-Frame. Eliminate zombies with 
 
 ---
 
-### 3. **Tester**
+### 3. **Tester** - Chique Bangalao Cruiz
 **Responsibilities:**
 - Quality assurance (QA) testing
 - Performance testing
-- Compatibility testing (different browsers)
-- Balance testing (difficulty, spawn rates, zombie speed)
+- Compatibility testing (different browsers, mobile)
+- Balance testing (spawn rates, zombie speed)
 
 
 ---
