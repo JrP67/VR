@@ -30,9 +30,6 @@ A WebXR-based VR zombie defense game built with A-Frame. Eliminate zombies with 
 ### Installation
 
 1. **Clone or download the project**
-   ```bash
-   cd d:\Beat\drive-download-20251228T120051Z-3-001
-   ```
 
 2. **Install dependencies**
    ```bash
