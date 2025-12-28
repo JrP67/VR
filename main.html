@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stadium Arena VR - Fixed Zombies</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    
+    <style>
+        #ui { position: fixed; top: 20px; left: 20px; z-index: 1000; font-family: Arial, sans-serif; }
+        .btn { padding: 12px 24px; cursor: pointer; font-size: 16px; border: none; border-radius: 8px; background: #28a745; color: white; font-weight: bold; }
+        #healthDisplay { color: white; font-size: 24px; margin-top: 10px; text-shadow: 2px 2px 4px #000; }
+        #gameOver {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            z-index: 9999; color: white; flex-direction: column; align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ui">
+        <button id="startBtn" class="btn">START GAME</button>
+        <div id="healthDisplay">Health: 10</div>
+    </div>
+
+    <div id="gameOver">
+        <h1 style="color: red; font-size: 80px;">WASTED</h1>
+        <p id="finalScore" style="font-size: 32px;">Score: 0</p>
+        <button onclick="location.reload()" class="btn">RETRY</button>
+    </div>
+
+    <script>
+        AFRAME.registerComponent('boundary-checker', {
+            tick: function () {
+                let pos = this.el.getAttribute('position');
+                const LIMIT = 49; 
+                let newPos = { x: pos.x, y: pos.y, z: pos.z };
+                let changed = false;
+                if (pos.x > LIMIT) { newPos.x = LIMIT; changed = true; }
+                if (pos.x < -LIMIT) { newPos.x = -LIMIT; changed = true; }
+                if (pos.z > LIMIT) { newPos.z = LIMIT; changed = true; }
+                if (pos.z < -LIMIT) { newPos.z = -LIMIT; changed = true; }
+                if (changed) { this.el.setAttribute('position', newPos); }
+            }
+        });
+    </script>
+
+    <a-scene>
+        <a-assets>
+            <img id="floor-tex" src="floor-1024.jpg">
+            <img id="stadium-img" src="stadium_01_4k.png">
+            <a-asset-item id="zombie-attack" src="Zombie Attack.glb"></a-asset-item>
+            <a-asset-item id="zombie-turn" src="Zombie Turn.glb"></a-asset-item>
+            <a-asset-item id="zombie-walk" src="Zombie Walk.glb"></a-asset-item>
+            <a-asset-item id="baseball-bat" src="Baseball Bat.glb"></a-asset-item>
+            <audio id="zombie-alive-sound-asset" src="zombie-sound-357975.mp3" preload="auto"></audio>
+            <audio id="zombie-dying-sound-asset" src="zombie-dying-sound-357974.mp3" preload="auto"></audio>
+        </a-assets>
+
+        <a-entity id="dyingSound" sound="src: #zombie-dying-sound-asset; positional: false"></a-entity>
+
+<a-sky src="#stadium-img" color="#444" rotation="0 -90 0"></a-sky> 
+
+<a-entity light="type: ambient; color: #555; intensity: 0.3"></a-entity>
+
+<a-entity light="type: directional; color: #333; intensity: 0.2" position="0 20 0"></a-entity>
+
+        <a-plane src="#floor-tex" rotation="-90 0 0" width="100" height="100" repeat="20 20"></a-plane>
+
+        <a-entity id="player" camera look-controls wasd-controls="acceleration: 15" position="0 1.6 0" boundary-checker>
+    
+    <a-entity light="type: spot; 
+                     angle: 35; 
+                     intensity: 1.5; 
+                     distance: 40; 
+                     penumbra: 0.4; 
+                     decay: 2; 
+                     color: #fff" 
+              position="0 0 0">
+    </a-entity>
+
+    <a-text id="scoreText" value="Score: 0" position="0 -0.3 -0.5" scale="0.4 0.4 0.4" color="white" align="center"></a-text>
+    <a-entity cursor="fuse: true; fuseTimeout: 250" position="0 0 -1"
+              geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.025"
+              material="color: #00ff00; shader: flat"
+              raycaster="objects: .clickable">
+    </a-entity>
+</a-entity> 
+        </a-entity>
+
+        <a-entity id="stadium-fences">
+            <a-plane position="0 2 -50" width="100" height="4" material="wireframe: true; color: #888; side: double"></a-plane>
+            <a-plane position="0 2 50" rotation="0 180 0" width="100" height="4" material="wireframe: true; color: #888; side: double"></a-plane>
+            <a-plane position="-50 2 0" rotation="0 90 0" width="100" height="4" material="wireframe: true; color: #888; side: double"></a-plane>
+            <a-plane position="50 2 0" rotation="0 -90 0" width="100" height="4" material="wireframe: true; color: #888; side: double"></a-plane>
+        </a-entity>
+
+        <a-entity id="left-hand" laser-controls="hand: left" raycaster="objects: .clickable;">
+            <a-entity gltf-model="#baseball-bat" position="0 0 -0.2" rotation="-45 0 0" scale="1 1 1"></a-entity>
+        </a-entity>
+        <a-entity id="right-hand" laser-controls="hand: right" raycaster="objects: .clickable;">
+            <a-entity gltf-model="#baseball-bat" position="0 0 -0.2" rotation="-45 0 0" scale="1 1 1"></a-entity>
+        </a-entity>
+    </a-scene>
+    <script src="script.js"></script>
+</body>
+</html>
