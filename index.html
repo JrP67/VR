@@ -53,18 +53,19 @@
             <a-asset-item id="zombie-turn" src="Zombie Turn.glb"></a-asset-item>
             <a-asset-item id="zombie-walk" src="Zombie Walk.glb"></a-asset-item>
             <a-asset-item id="baseball-bat" src="Baseball Bat.glb"></a-asset-item>
-            <audio id="zombie-alive-sound-asset" src="zombie-sound-357975.mp3" preload="auto"></audio>
-            <audio id="zombie-dying-sound-asset" src="zombie-dying-sound-357974.mp3" preload="auto"></audio>
+            <audio id="zombie-alive-sound-asset" src="zombie-sounds-95180.mp3" preload="auto"></audio>
+            <audio id="zombie-dying-sound-asset" src="zombie-6851.mp3" preload="auto"></audio>
+            <audio id="bite-sound-asset" src="zombie-bite-96528.mp3" preload="auto"></audio>
+            <audio id="bite-sound1-asset" src="zombie-bite-35795.mp3" preload="auto"></audio>
+            <audio id="gunshot-asset" src="gunshot.mp3" preload="auto"></audio>
         </a-assets>
 
-        <a-entity id="dyingSound" sound="src: #zombie-dying-sound-asset; positional: false"></a-entity>
+        <a-entity id="biteSound" sound="src: #bite-sound-asset; positional: false; volume: 2; poolSize: 5"></a-entity>
+        <a-entity id="gunshotSound" sound="src: #gunshot-asset; positional: false; volume: 0.20"></a-entity>
 
-<a-sky src="#stadium-img" color="#444" rotation="0 -90 0"></a-sky> 
-
-<a-entity light="type: ambient; color: #555; intensity: 0.3"></a-entity>
-
-<a-entity light="type: directional; color: #333; intensity: 0.2" position="0 20 0"></a-entity>
-
+    <a-sky src="#stadium-img" color="#444" rotation="0 -90 0"></a-sky> 
+        <a-entity light="type: ambient; color: #555; intensity: 0.3"></a-entity>
+        <a-entity light="type: directional; color: #333; intensity: 0.2" position="0 20 0"></a-entity>
         <a-plane src="#floor-tex" rotation="-90 0 0" width="100" height="100" repeat="20 20"></a-plane>
 
         <a-entity id="player" camera look-controls wasd-controls="acceleration: 15" position="0 1.6 0" boundary-checker>

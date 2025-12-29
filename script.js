@@ -69,7 +69,7 @@ function gameLoop() {
         const dz = pPos.z - zPos.z;
         const dist = Math.sqrt(dx*dx + dz*dz);
 
-        const speed = 0.08; 
+        const speed = 0.10; 
         z.setAttribute("position", {
             x: zPos.x + (dx/dist) * speed,
             y: 0,
@@ -79,11 +79,12 @@ function gameLoop() {
         if (z.object3D) z.object3D.lookAt(pPos.x, 0, pPos.z);
 
         if (dist < 1.5) {
-            const dyingSound = document.querySelector("#dyingSound");
-            if (dyingSound && dyingSound.components.sound) {
-                dyingSound.components.sound.playSound();
+            const biteSound = document.querySelector("#biteSound");
+            if (biteSound && biteSound.components.sound) {
+                biteSound.components.sound.stopSound(); 
+                biteSound.components.sound.playSound();
             }
-            health--;
+                    health--;
             healthDisplay.textContent = `Health: ${health}`;
             z.remove();
             activeZombies.splice(i, 1);
@@ -107,29 +108,40 @@ document.getElementById("startBtn").addEventListener("click", () => {
 // Desktop mouse click detection
 document.addEventListener("click", () => {
     if (!gameStarted) return;
-    
+
     const camera = document.querySelector("a-entity[camera]");
-    const scene = document.querySelector("a-scene");
     const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2(0, 0); // Center of screen
-    
-    // Get camera
+    const mouse = new THREE.Vector2(0, 0); 
     const cameraObj = camera.getObject3D("camera");
+    
     if (!cameraObj) return;
     
-    // Cast ray from center of screen
     raycaster.setFromCamera(mouse, cameraObj);
     
-    // Check intersections with all zombies
     const zombieObjects = activeZombies.map(z => z.object3D).filter(obj => obj);
     const intersects = raycaster.intersectObjects(zombieObjects, true);
     
+    // KINI NGA LINE: "Kon naay naigo nga zombie..."
     if (intersects.length > 0) {
-        // Find the zombie that was hit
+        
+        // 1. DINHI NA NATO I-PLAY ANG GUNSHOT (Kay naigo na man)
+        const gunshotSound = document.getElementById("gunshotSound");
+        if (gunshotSound && gunshotSound.components.sound) {   
+            gunshotSound.components.sound.stopSound();
+            gunshotSound.components.sound.playSound();
+        }
+
+        // 2. Logic sa pag-detect kon kinsang zombie ang naigo
         for (let zombie of activeZombies) {
-            if (intersects[0].object.parent === zombie.object3D || 
-                intersects[0].object === zombie.object3D ||
-                intersects[0].object.parent.parent === zombie.object3D) {
+            let hit = intersects[0].object;
+            let isHit = false;
+            
+            while(hit) {
+                if(hit === zombie.object3D) { isHit = true; break; }
+                hit = hit.parent;
+            }
+
+            if (isHit) {
                 score++;
                 document.getElementById("scoreText").setAttribute('value', `Score: ${score}`);
                 const idx = activeZombies.indexOf(zombie);
