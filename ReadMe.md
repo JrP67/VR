@@ -31,7 +31,7 @@ And somewhere in the darkness above those empty bleachers, you wonder: *who put 
 
 ## Planned Features & Future Improvements
 
-### Weapon Arsenal (Currently: Baseball Bat Only)
+### Weapon Arsenal (Currently: Ranged Baseball Bat)
 - **Firearms**: Pistols, shotguns, assault rifles with ammunition scarcity mechanics
 - **Melee Weapons**: Crowbars, machetes, sledgehammers with varying damage/speed trade-offs
 - **Explosives**: Grenades, molotov cocktails for area-of-effect damage
